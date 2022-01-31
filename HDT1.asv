@@ -28,7 +28,7 @@ end
 clc;
 close all;
 clear all;
-syms x;
+syms x x1;
 %f=x-2*sin(x); %Enter the Function here
 %f = 2/x - 1/sin(x);
 %f=sin(x)/x - 1/2;
@@ -42,10 +42,11 @@ x0 = input('Enter the intial approximation:');
 i = 0;
 error = 1;
 fprintf('\ti  \txi  \terror \n');
-% fplot(tanh(x),[-10,10]);
+figure(1);
+x1 = -5:0.5:5; 
+% plot(x1,tanh(x1),'r');
 hold on;
-% while(abs(error)>0.0000001)
-    for c = 1:6
+while(abs(error)>0.0000001)
     i = i + 1;
     f0=feval(fx,x0); %Calculating the value of function at x0
     f0_der=feval(gx, x0); %Calculating the value of function derivative at x0
@@ -53,9 +54,6 @@ hold on;
     error=abs(y-x0);
     x0 = y;
     fprintf('\t%d  \t%f  \t%f \n',i,y,error)
-    figure(1);
-    x1 = -5e5:0.5:5e5; 
-    plot(x1,tanh(x1),'r');
     yt = ((sech(x0))^2*(x1-x0))+tanh(x0);
     plot(x1,yt,'b');
     plot(x0, tanh(x0),'*');
@@ -63,8 +61,7 @@ hold on;
     xlabel("eje x");
     ylabel("eje y");
     title('tanh(xi) con x0 = 1.09');
-    end
-% end
+end
 %% metodo de la secante 
 x0=input('Ingrese el intervalo inferior: ');
 x1=input('Ingrese el intervalo superior: ');
