@@ -3,9 +3,9 @@ close all
 clear all
 clc
 syms x;
-%f=((3*x-1)^(1/2));
+f=((3*x-1)^(1/2));
 %f = (x^(2) + 1)/3;
-f = 3*x*(1-x);
+%f = 3*x*(1-x);
 fx = inline(f);
 %aux = feval(fx,xi);
 x0=0.3;
@@ -28,13 +28,13 @@ end
 clc;
 close all;
 clear all;
-syms x x1;
-%f=x-2*sin(x); %Enter the Function here
+syms x;
+f=x-2*sin(x); %Enter the Function here
 %f = 2/x - 1/sin(x);
 %f=sin(x)/x - 1/2;
 %f=diff((x^2+log(x)^2)^(1/2));
 %f=3*x*(1-x)-x;
-f = tanh(x);
+%f = tanh(x);
 fx= inline(f);
 g=diff(f); %The Derivative of the Function
 gx = inline(g);
@@ -42,11 +42,10 @@ x0 = input('Enter the intial approximation:');
 i = 0;
 error = 1;
 fprintf('\ti  \txi  \terror \n');
-figure(1);
-x1 = -5:0.5:5; 
-% plot(x1,tanh(x1),'r');
+% fplot(tanh(x),[-10,10]);
 hold on;
 while(abs(error)>0.0000001)
+    %for c = 1:6
     i = i + 1;
     f0=feval(fx,x0); %Calculating the value of function at x0
     f0_der=feval(gx, x0); %Calculating the value of function derivative at x0
@@ -54,13 +53,20 @@ while(abs(error)>0.0000001)
     error=abs(y-x0);
     x0 = y;
     fprintf('\t%d  \t%f  \t%f \n',i,y,error)
-    yt = ((sech(x0))^2*(x1-x0))+tanh(x0);
-    plot(x1,yt,'b');
-    plot(x0, tanh(x0),'*');
-    hold on;
-    xlabel("eje x");
-    ylabel("eje y");
-    title('tanh(xi) con x0 = 1.09');
+    try 
+        figure(1);
+        x1 = linspace(-5*10^10,-5*10^10,100); 
+        plot(x1,tanh(x1),'r');
+        yt = ((sech(x0))^2*(x1-x0))+tanh(x0);
+        plot(x1,yt,'b');
+        plot(x0, tanh(x0),'*');
+        hold on;
+        xlabel("eje x");
+        ylabel("eje y");
+        title('tanh(xi) con x0 = 1.09');
+    catch 
+        fprintf('el metodo murio');
+    end
 end
 %% metodo de la secante 
 x0=input('Ingrese el intervalo inferior: ');
